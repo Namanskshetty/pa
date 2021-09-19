@@ -20,3 +20,5 @@ Personal Assistant
    ```
 
 * Add your music library to `songs_dir`
+* You can change your personal assistnat name in `ainame` default `windows`
+* Chnange your name in `NAME`
