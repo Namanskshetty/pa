@@ -9,8 +9,8 @@ import pyjokes
 import random
 
 print("stating......")
-NAME="Naman" #change it to your prefered NAME
-songs_dir="D:\\music" #add your music file directory here
+NAME="sir" #change it to your prefered NAME
+songs_dir="<file>" #add your music file directory here
 ainame="windows"
 engine=pyttsx3.init("sapi5")
 voices=engine.getProperty("voices")
