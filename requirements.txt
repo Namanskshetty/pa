@@ -3,3 +3,4 @@ pyttsx3
 pywhatkit
 wikipedia
 pyjokes
+pyperclip
