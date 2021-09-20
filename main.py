@@ -126,7 +126,7 @@ def main():
 
         elif "search" in command:# this performs woogle searching
             ui=command.replace("search","")
-            webbrowser.open("https://namanshetty.herokuapp.com/search?q="+ui)
+            webbrowser.open("https://whoogle.sdf.org/search?q="+ui)
 
         elif "generate a password" in command:#generates password
             try:
