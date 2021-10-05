@@ -127,6 +127,8 @@ def main():
         elif "search" in command:# this performs woogle searching
             ui=command.replace("search","")
             webbrowser.open("https://whoogle.sdf.org/search?q="+ui)
+            
+            #can also replace the open with empty string and add the desired extension to the website in order to go the website of choice
 
         elif "generate a password" in command:#generates password
             try:
@@ -150,7 +152,7 @@ def main():
 
         elif "exit" in command:
             speak("bye.....")
-            return 0 # chabges the calue of the while loop and stops the program
+            return 0 # changes the value of the while loop and stops the program
 
 while True:
     a=main()
