@@ -3,7 +3,7 @@ Personal Assistant
 ### Prerequisite
 * Python3
 
-### Instalation
+### Installation
 1. Clone the repo
    ```sh
    git clone https://github.com/Namanskshetty/pa.git
