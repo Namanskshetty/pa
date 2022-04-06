@@ -5,9 +5,9 @@ Personal Assistant
 
 ### Installation
 1. Clone the repo
-   ```sh
-   git clone https://github.com/Namanskshetty/pa.git
-   ```
+  ```sh
+  git clone https://github.com/Namanskshetty/pa.git
+  ```
 2. Run install.py (only once)
   ```sh
   pyhton3 install.py
