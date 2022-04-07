@@ -4,3 +4,7 @@ pywhatkit
 wikipedia
 pyjokes
 pyperclip
+pynput
+pycaw
+comtypes
+ctypes
