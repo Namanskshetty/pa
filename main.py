@@ -10,6 +10,9 @@ import random
 import pyperclip
 import re
 import string
+import requests
+import json
+import time as _time
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
@@ -184,6 +187,39 @@ def main():
             IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
             volume = cast(interface, POINTER(IAudioEndpointVolume))
             volume.SetMute(1,None)
+        elif "news headlines" in command:
+            try:
+                url = ('https://newsapi.org/v2/top-headlines?''country=in&'
+                       'apiKey=a1061e9ef7a84860a763d1eda933c048')
+                response = requests.get(url)
+                news = json.loads(response.text)
+                i=0
+                for new in news['articles']:
+                    # print(str(new['title']), "\n\n")
+                    news_title = (str(new['title']))
+                    speak(news_title)
+                    _time.sleep(1)
+                    i=i+1
+                    if i==3:
+                        break
+            except:
+                speak("No internet connection")
+        elif "news description" in command:
+            try:
+                url = ('https://newsapi.org/v2/top-headlines?''country=in&'
+                       'apiKey=a1061e9ef7a84860a763d1eda933c048')
+                response = requests.get(url)
+                news = json.loads(response.text)
+                for new in news['articles']:
+                    # print(str(new['title']), "\n\n")
+                    news_title = (str(new['description']))
+                    speak(news_title)
+                    _time.sleep(1)
+                    i=i+1
+                    if i==3:
+                        break
+            except:
+                speak("No internet connection")
 
         elif "exit" in command:
             speak("bye.....")
