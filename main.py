@@ -10,6 +10,9 @@ import random
 import pyperclip
 import re
 import string
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from ctypes import cast, POINTER
+from comtypes import CLSCTX_ALL
 
 print("stating......")
 NAME="user" #change it to your prefered NAME
@@ -35,8 +38,10 @@ def wishMe(): #this code wishes the user and the global variable is set as NAME
 def create(name_acc,password):
     a=str(name_acc)
     b=str(password)
-    f=open("password.txt", "a+")
-    f.write(*a+" -> "+b)
+    d = os.path.dirname(__file__)
+    f=open(d+"\password.txt", "a+")
+    w=str(a+" -> "+b)
+    f.write(w)
     f.close()
 
 
@@ -55,6 +60,17 @@ def takeCommand():
       print("could not understand..")
       query="hello"
     return query
+def myvol(to):
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(
+    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+    if to == 100:
+        volume.SetMasterVolumeLevel(-0.0, None) #max
+    if to> 50 and to<100:
+        volume.SetMasterVolumeLevel(-5.0, None) #72%
+    if to==50:
+        volume.SetMasterVolumeLevel(-10.0, None) #51%
 
 # Main program starts here
 speak("starting....")
@@ -127,10 +143,10 @@ def main():
         elif "search" in command:# this performs woogle searching
             ui=command.replace("search","")
             webbrowser.open("https://whoogle.sdf.org/search?q="+ui)
-            
+
             #can also replace the open with empty string and add the desired extension to the website in order to go the website of choice
 
-        elif "generate a password" in command:#generates password
+        elif "generate password" in command:#generates password
             try:
                 num = [int(word) for word in command.split() if word.isdigit()] # finds the integer value in the text
                 lon = num[0]# limits the integer value to the first one
@@ -143,12 +159,31 @@ def main():
                 create(name_acc,password)
             except:
                 letters = string.ascii_lowercase + string.digits + string.punctuation
-                password = ''.join(random.choice(letters) for i in range(lon)) # if user dosent specify the size of password 8 is used as default
+                password = ''.join(random.choice(letters) for i in range(8)) # if user dosent specify the size of password 8 is used as default
                 print(password)
                 pyperclip.copy(password)
                 speak("password generated with default size check password.txt file for the password also clipboard")
                 name_acc=re.findall("for (\w+)",command)#searches for the account name
                 create(name_acc,password)# create the file
+        elif "volume" in command:
+            io=command.replace("set volume to","")
+            to=int(io)
+            devices = AudioUtilities.GetSpeakers()
+            interface = devices.Activate(
+            IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+            volume = cast(interface, POINTER(IAudioEndpointVolume))
+            if volume.GetMute==0:
+                myvol(to)
+            else:
+                volume.SetMute(0,None)#to make surte the the speakeres are not muted
+                myvol(to)
+
+        elif "mute" in command:
+            devices = AudioUtilities.GetSpeakers()
+            interface = devices.Activate(
+            IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+            volume = cast(interface, POINTER(IAudioEndpointVolume))
+            volume.SetMute(1,None)
 
         elif "exit" in command:
             speak("bye.....")
